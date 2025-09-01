@@ -9,7 +9,27 @@ This project simulates the tracking of **Seaton** — a foolish criminal who uni
 1. A **TCP latency measurement server** that collects signal data  
 2. A **Monte Carlo simulator** that estimates Seaton's location based on signal latency patterns
 
----
+## Mathematical Principle
+
+The localization of Mr. Seaton is achieved using a Time Difference of Arrival (TDoA) method with signals received at four known server locations.
+
+Signal Reception: Four servers (Hong Kong, Seoul, Russia, UK) receive a signal from Mr. Seaton at times $t_1, t_2, t_3, t_4$.
+
+Proportional Relationship: The time of arrival at each server is proportional to the distance from Seaton's location. Thus:
+$dᵢ = c * tᵢ$
+where $dᵢ$ is the distance to server $i$, and $c$ is the constant signal propagation speed (to be determined).
+
+Trilateration (3 Circles): Using the first three servers $(t_1, t_2, t_3)$, we can form three circles centered at each server's location with radii $c*t_1, c*t_2, c*t_3$. In theory, these three circles intersect at a single point, which is Seaton's unique location $(x, y)$.
+
+Solving for the Constant c: The fourth server provides the necessary constraint to solve for the unknown constant c. The measured time t₄ must satisfy the distance equation for the fourth server:
+$$
+distance( (x, y), Server₄ ) = c * t₄
+$$
+By substituting the location $(x, y)$ found from the first three points, we can solve this equation for the exact value of $c$.
+
+Final Localization: With $c$ known, the precise distances to all servers are calculated, yielding Mr. Seaton's exact coordinates through geometric intersection.
+
+This method combines trilateration with a time-to-distance scaling factor solved via an over-determined system, ensuring accurate and unique localization.
 
 ## 🛠️ Prerequisites  
 - Python 3.7+
